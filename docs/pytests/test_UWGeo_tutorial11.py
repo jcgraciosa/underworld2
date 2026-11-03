@@ -3,6 +3,9 @@ import pytest
 import ntpath
 from inspect import getsourcefile
 
+# badlands pins numpy<2, so numpy 2 environments run without it
+pytest.importorskip("badlands")
+
 wdir = ntpath.dirname(getsourcefile(lambda:0))+"/../UWGeodynamics/tutorials/"
 
 tutorials = [

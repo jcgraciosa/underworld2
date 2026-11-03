@@ -37,9 +37,9 @@ def convert_to_ascii(file_input, file_output=None):
     f = h5py.File(os.path.join(root_dir, attributesFile.split(":")[0]), "r")
     data = f["/data"]
 
-    new = np.zeros((geometry.value.shape[0], geometry.value.shape[1] + 1))
-    new[:, :-1] = geometry.value
-    new[:, -1] = data.value.ravel()
+    new = np.zeros((geometry[()].shape[0], geometry[()].shape[1] + 1))
+    new[:, :-1] = geometry[()]
+    new[:, -1] = data[()].ravel()
 
     if file_output is None or file_output == "None":
         file_output = os.path.split(file_input)[-1].split(".")[0] + ".asc"

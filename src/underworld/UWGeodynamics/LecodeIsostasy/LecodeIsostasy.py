@@ -344,7 +344,7 @@ class LecodeIsostasy(object):
 
             _, surfaceNodes = self._get_surface_nodes()
             if surfaceNodes.size > 0:
-                ix = np.in1d(np.arange(self.mesh.nodesGlobal), surfaceNodes)
+                ix = np.isin(np.arange(self.mesh.nodesGlobal), surfaceNodes)
                 Ipositions = GlobalIndices3d[2].flatten()[ix]
                 Jpositions = GlobalIndices3d[1].flatten()[ix]
 
@@ -373,7 +373,7 @@ class LecodeIsostasy(object):
             # FROM Numpy 1.13> ... more efficient ?
             #ix = np.isin(GlobalIndices3d, node_gids)
             #Kpositions, Jposition, Iposition = np.where(ix)
-            ix = np.in1d(np.arange(self.mesh.nodesGlobal), node_gids)
+            ix = np.isin(np.arange(self.mesh.nodesGlobal), node_gids)
             Ipositions = GlobalIndices3d[2].flatten()[ix]
             Jpositions = GlobalIndices3d[1].flatten()[ix]
 
@@ -398,7 +398,7 @@ class LecodeIsostasy(object):
             heights_nodes = self.mesh.data[bot_ids,-1]
 
             # Get an I,J representation of the node coordinates
-            ix = np.in1d(np.arange(self.mesh.nodesGlobal), node_gids)
+            ix = np.isin(np.arange(self.mesh.nodesGlobal), node_gids)
             Ipositions = GlobalIndices3d[2].flatten()[ix]
             Jpositions = GlobalIndices3d[1].flatten()[ix]
 
@@ -514,7 +514,7 @@ class LecodeIsostasy(object):
 
         # Calculate Mean densities at the bottom
         if self.maskedMat:
-            mask = np.in1d(global_materials, self.maskedMatIndices)
+            mask = np.isin(global_materials, self.maskedMatIndices)
             maskedArray = np.ma.masked_array(global_densities, mask)
             botMeanDensities = maskedArray.mean(axis=0)
         else:
@@ -572,7 +572,7 @@ class LecodeIsostasy(object):
 
         # Calculate Mean densities at the bottom
         if self.maskedMat:
-            mask = np.in1d(global_materials, self.maskedMatIndices)
+            mask = np.isin(global_materials, self.maskedMatIndices)
             maskedArray = np.ma.masked_array(global_densities, mask)
             botMeanDensities = maskedArray.mean(axis=0)
         else:

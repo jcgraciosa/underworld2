@@ -21,7 +21,7 @@ def find_tracked_fields(folder, tracers_name):
 def extract_global_indices(output_folder, tracers_name, index):
     global_index_file = """{0}_global_index-{1}.h5""".format(tracers_name, index)
     with h5py.File(os.path.join(output_folder, global_index_file), "r") as h5f:
-        global_indices = h5f["data"].value
+        global_indices = h5f["data"][()]
     return global_indices.ravel()
 
 def extract_tracers_data(output_folder, tracers_name, csv=True):
@@ -47,10 +47,10 @@ def extract_tracers_data(output_folder, tracers_name, csv=True):
         file = """{0}-{1}.h5""".format(tracers_name, index)
         file = os.path.join(output_folder, file)
         with h5py.File(file, "r") as h5f:
-            dftempo["Coord1"] = h5f["data"].value[:,0]
-            dftempo["Coord2"] = h5f["data"].value[:,1]
+            dftempo["Coord1"] = h5f["data"][()][:,0]
+            dftempo["Coord2"] = h5f["data"][()][:,1]
             try:
-                dftempo["Coord3"] = h5f["data"].value[:,2]
+                dftempo["Coord3"] = h5f["data"][()][:,2]
             except:
                 dftempo["Coord3"] = None
             dftempo["FileIndex"] = index
@@ -60,7 +60,7 @@ def extract_tracers_data(output_folder, tracers_name, csv=True):
             file = """{0}_{1}-{2}.h5""".format(tracers_name, field, index)
             file = os.path.join(output_folder, file)
             with h5py.File(file, "r") as h5f:
-                dftempo[field] = h5f["data"].value.ravel()
+                dftempo[field] = h5f["data"][()].ravel()
 
         dftempo["TracerId"] = dftempo["global_index"].map(id_dict)
         df = pd.concat([df, dftempo], ignore_index=True, sort=False)

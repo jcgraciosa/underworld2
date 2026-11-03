@@ -5,7 +5,7 @@ import underworld.function as fn
 import numpy as np
 import sys
 import math
-from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage import gaussian_filter
 from scipy.interpolate import griddata, interp1d, CloughTocher2DInterpolator
 from underworld.scaling import non_dimensionalise as nd
 from underworld.scaling import dimensionalise
@@ -318,7 +318,7 @@ class Badlands(SurfaceProcesses):
         dt : float,
             Non dimensional time to advance badlands forward.
         sigma : float, 0 default
-            Apply a gaussian_filter, as per scipy.ndimage.filters, to the injected velocity displacements from UW to badlands
+            Apply a gaussian_filter, as per scipy.ndimage, to the injected velocity displacements from UW to badlands
         uw_sample_style : int, 0 default
             Style for UW velocity sampling. Possible values 0 or 1.
             0 - Use dynamic elevation from Badlands' model elevation. Interpolated to grid locations to sample the UW velocity.
@@ -480,13 +480,13 @@ class Badlands(SurfaceProcesses):
         # convert air to sediment
         for air_material in self.airIndex:
             # if material air, and we're below surface, make it sediment
-            sedimented_mask = np.logical_and(np.in1d(mi, air_material), under_bd_surface)
+            sedimented_mask = np.logical_and(np.isin(mi[:, 0], air_material), under_bd_surface)
             mi[sedimented_mask] = self.sedimentIndex
 
         # convert sediment to air
         for air_material in self.airIndex:
             # if material is not air, and above surface, make it air
-            eroded_mask = np.logical_and(~np.in1d(mi, air_material), ~under_bd_surface)
+            eroded_mask = np.logical_and(~np.isin(mi[:, 0], air_material), ~under_bd_surface)
             mi[eroded_mask] = self.airIndex[0]
         return surf_fn_badlands
 

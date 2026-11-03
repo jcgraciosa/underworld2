@@ -71,7 +71,7 @@ class FrictionBoundaries(object):
                 right = globalIndices[:, :, -thickness:].ravel()
 
             intersect = np.intersect1d(self.subMesh.data_nodegId.ravel(), right)
-            mask = np.in1d(self.subMesh.data_nodegId.ravel(), intersect)
+            mask = np.isin(self.subMesh.data_nodegId.ravel(), intersect)
             self._right_mask.data[mask, 0] = 1
             self._mask.data[mask, 0] = 1
             conditions.append((self._right_mask > 0., self.rightFriction))
@@ -86,7 +86,7 @@ class FrictionBoundaries(object):
                 left = globalIndices[:, :, :thickness].ravel()
 
             intersect = np.intersect1d(self.subMesh.data_nodegId.ravel(), left)
-            mask = np.in1d(self.subMesh.data_nodegId.ravel(), intersect)
+            mask = np.isin(self.subMesh.data_nodegId.ravel(), intersect)
             self._left_mask.data[mask, 0] = 1
             self._mask.data[mask, 0] = 1
             conditions.append((self._left_mask > 0., self.leftFriction))
@@ -101,7 +101,7 @@ class FrictionBoundaries(object):
                 raise ValueError("Mesh is 2D")
 
             intersect = np.intersect1d(self.subMesh.data_nodegId.ravel(), front)
-            mask = np.in1d(self.subMesh.data_nodegId.ravel(), intersect)
+            mask = np.isin(self.subMesh.data_nodegId.ravel(), intersect)
             self._front_mask.data[mask, 0] = 1
             self._mask.data[mask, 0] = 1
             conditions.append((self._front_mask > 0., self.frontFriction))
@@ -116,7 +116,7 @@ class FrictionBoundaries(object):
                 raise ValueError("Mesh is 2D")
 
             intersect = np.intersect1d(self.subMesh.data_nodegId.ravel(), back)
-            mask = np.in1d(self.subMesh.data_nodegId.ravel(), intersect)
+            mask = np.isin(self.subMesh.data_nodegId.ravel(), intersect)
             self._back_mask.data[mask, 0] = 1
             self._mask.data[mask, 0] = 1
             conditions.append((self._back_mask > 0., self.backFriction))
@@ -130,7 +130,7 @@ class FrictionBoundaries(object):
             # friction is to be applied
             intersect = np.intersect1d(self.subMesh.data_nodegId.ravel(), bottom)
             # Create a mask to highlight those elements in the local domain
-            mask = np.in1d(self.subMesh.data_nodegId.ravel(), intersect)
+            mask = np.isin(self.subMesh.data_nodegId.ravel(), intersect)
             self._bottom_mask.data[mask, 0] = 1
             self._mask.data[mask, 0] = 1
             conditions.append((self._bottom_mask > 0., self.bottomFriction))
@@ -141,7 +141,7 @@ class FrictionBoundaries(object):
 
             top = globalIndices[-thickness:].ravel()
             intersect = np.intersect1d(self.subMesh.data_nodegId.ravel(), top)
-            mask = np.in1d(self.subMesh.data_nodegId.ravel(), intersect)
+            mask = np.isin(self.subMesh.data_nodegId.ravel(), intersect)
             self._top_mask.data[mask, 0] = 1
             self._mask.data[mask, 0] = 1
             conditions.append((self._top_mask > 0., self.topFriction))
