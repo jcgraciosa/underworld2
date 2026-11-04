@@ -2999,6 +2999,9 @@ class _RestartFunction(object):
 def _get_output_units(*args):
     from pint import UndefinedUnitError
     for arg in args:
+        # pint >= 0.25 maps Unit(None) to dimensionless instead of raising.
+        if arg is None:
+            continue
         try:
             return u.Unit(arg)
         except (TypeError, UndefinedUnitError):

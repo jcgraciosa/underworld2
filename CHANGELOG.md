@@ -15,6 +15,8 @@ Fixes:
 * Fix for UWGeo losing BCs and unknown field. #762
 * `numpy 2.4`: `np.in1d` (removed) replaced by `np.isin`. h5py 3: `Dataset.value` replaced by `[()]`. `scipy.ndimage.filters` import replaced by `scipy.ndimage` (removed in scipy 2.0).
 * Badlands tests are skipped when `badlands` is not installed, e.g. in `numpy 2` environments.
+* `pint >= 0.25`: UWGeodynamics checkpoint output units no longer become dimensionless when unset.
+* Example `1_08_ViscoElasticHalfSpace`: tracer x coordinate was left uninitialised.
 
 Release 2.17.3 [2026-05-14]
 ---------------------------
